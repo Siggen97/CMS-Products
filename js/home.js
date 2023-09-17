@@ -38,42 +38,53 @@ function displayProduct(product, sectionId, media) {
 	let productDiv = document.createElement('div');
 	productDiv.className = 'product';
 
+	// Create the clickable headline (h3) first
+	let productTitle = document.createElement('h3');
+
+	let productTitleLink = document.createElement('a');
+	productTitleLink.href = `productDetail.html?id=${product.id}`;
+	productTitleLink.textContent = product.title.rendered;
+
+	productTitle.appendChild(productTitleLink);
+	productDiv.appendChild(productTitle);
+
+	let productLink = document.createElement('a');
+	productLink.href = `productDetail.html?id=${product.id}`;
+
 	let productImage = document.createElement('img');
 	let imageUrl = getImageFromMedia(product, media);
 	if (imageUrl) {
 		productImage.src = imageUrl;
-		productDiv.appendChild(productImage);
 	}
 
-	let productTitle = document.createElement('h3');
-	productTitle.textContent = product.title.rendered;
+	
+	productLink.appendChild(productImage);
+	productDiv.appendChild(productLink);
 
 	let productContent = document.createElement('p');
 	productContent.innerHTML = truncateContent(product.content.rendered);
 
-    let productPrice = document.createElement('p');
-		productPrice.textContent = `$29.99`;
+	let productPrice = document.createElement('p');
+	productPrice.textContent = `$29.99`; //Cant't seem to find price from the URL
 
-    let productLink = document.createElement('a');
-		productLink.href = `productDetail.html?id=${product.id}`;
-		productLink.textContent = 'View Details';
+	let viewDetailsLink = document.createElement('a');
+	viewDetailsLink.href = `productDetail.html?id=${product.id}`;
+	viewDetailsLink.textContent = 'View Details';
 
 	let addToCartButton = document.createElement('button');
 	addToCartButton.innerText = 'Add to Cart';
-    addToCartButton.className = 'addToCart';
-	addToCartButton.addEventListener('click', () => {
-	});
+	addToCartButton.className = 'addToCart';
+	addToCartButton.addEventListener('click', () => {});
 
-	
-
-	productDiv.appendChild(productTitle);
-    productDiv.appendChild(productImage);
 	productDiv.appendChild(productContent);
-    productDiv.appendChild(productLink);
-    productDiv.appendChild(productPrice);
+	productDiv.appendChild(viewDetailsLink);
+	productDiv.appendChild(productPrice);
 	productDiv.appendChild(addToCartButton);
+
 	section.appendChild(productDiv);
 }
+
+
 
 function displayProducts(products, sectionId, media) {
 	products.forEach((product) => displayProduct(product, sectionId, media));
