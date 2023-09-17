@@ -5,10 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchProducts() {
-	const productsApiUrl =
-		'http://localhost/wordpress/wp-json/wp/v2/product?consumer_key=ck_6d879438f8fe05bafc6388f0ea4bfda8f4d169b1&consumer_secret=cs_0a9a68c9cfd4a10fca3831baa56639459ae80e62';
-	const mediaApiUrl =
-		'http://localhost/wordpress/wp-json/wp/v2/media?consumer_key=ck_6d879438f8fe05bafc6388f0ea4bfda8f4d169b1&consumer_secret=cs_0a9a68c9cfd4a10fca3831baa56639459ae80e62';
+	const productsApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/product';
+	const mediaApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/media';
 
 	// Fetch both products and media
 	Promise.all([fetch(productsApiUrl), fetch(mediaApiUrl)])
@@ -18,6 +16,13 @@ function fetchProducts() {
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 }
+function truncateContent(content, limit = 60) {
+	const strippedContent = content.replace(/<[^>]+>/g, ''); // Remove HTML tags
+	return strippedContent.length > limit
+		? strippedContent.substr(0, limit) + '...'
+		: strippedContent;
+}
+
 
 function displayProducts(products, media) {
 	const productsSection = document.getElementById('productsidk');
@@ -31,7 +36,7 @@ function displayProducts(products, media) {
 		
 
 		let productContent = document.createElement('p');
-		productContent.innerHTML = product.content.rendered;
+		productContent.innerHTML = truncateContent(product.content.rendered, 60);
 
 		let productPrice = document.createElement('p');
 		productPrice.textContent = `$29.99`;

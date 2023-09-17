@@ -1,8 +1,6 @@
 
-const productApiUrl =
-	'http://localhost/wordpress/wp-json/wp/v2/product?consumer_key=ck_6d879438f8fe05bafc6388f0ea4bfda8f4d169b1&consumer_secret=cs_0a9a68c9cfd4a10fca3831baa56639459ae80e62';
-const mediaApiUrl =
-	'http://localhost/wordpress/wp-json/wp/v2/media?consumer_key=ck_6d879438f8fe05bafc6388f0ea4bfda8f4d169b1&consumer_secret=cs_0a9a68c9cfd4a10fca3831baa56639459ae80e62';
+const productApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/product';
+const mediaApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/media';
 
 async function fetchProductsAndMedia() {
 	let productsResponse = await fetch(productApiUrl);
@@ -11,14 +9,23 @@ async function fetchProductsAndMedia() {
 	let products = await productsResponse.json();
 	let media = await mediaResponse.json();
 
-	let featuredProduct = products.find((product) => product.id === 152);
-	if (featuredProduct) {
-		displayProduct(featuredProduct, 'feature-products', media);
+	// Display the latest product in 'feature-product' section
+	if (products && products.length > 0) {
+		displayProduct(products[0], 'feature-product', media);
 	}
 
-	let latestProducts = products.slice(0, 3);
+	// Display the next 3 products in 'idkproducts-latest' section
+	let latestProducts = products.slice(1, 4);
 	displayProducts(latestProducts, 'idkproducts-latest', media);
 }
+
+function truncateContent(content, limit = 60) {
+	const strippedContent = content.replace(/<[^>]+>/g, ''); // Remove HTML tags
+	return strippedContent.length > limit
+		? strippedContent.substr(0, limit) + '...'
+		: strippedContent;
+}
+
 
 function getImageFromMedia(product, media) {
 	let mediaItem = media.find((item) => item.id === product.featured_media);
@@ -42,7 +49,7 @@ function displayProduct(product, sectionId, media) {
 	productTitle.textContent = product.title.rendered;
 
 	let productContent = document.createElement('p');
-	productContent.innerHTML = product.content.rendered;
+	productContent.innerHTML = truncateContent(product.content.rendered);
 
     let productPrice = document.createElement('p');
 		productPrice.textContent = `$29.99`;
@@ -57,6 +64,8 @@ function displayProduct(product, sectionId, media) {
 	addToCartButton.addEventListener('click', () => {
 	});
 
+	
+
 	productDiv.appendChild(productTitle);
     productDiv.appendChild(productImage);
 	productDiv.appendChild(productContent);
@@ -69,6 +78,8 @@ function displayProduct(product, sectionId, media) {
 function displayProducts(products, sectionId, media) {
 	products.forEach((product) => displayProduct(product, sectionId, media));
 }
+
+
 
 // Call the main function
 fetchProductsAndMedia();

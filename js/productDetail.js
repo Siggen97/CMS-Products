@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function fetchProductDetails(id) {
-	const apiUrl = `http://localhost/wordpress/wp-json/wp/v2/product/${id}?consumer_key=ck_6d879438f8fe05bafc6388f0ea4bfda8f4d169b1&consumer_secret=cs_0a9a68c9cfd4a10fca3831baa56639459ae80e62`;
+	const apiUrl = `https://www.idkweb.site/wp-json/wp/v2/product/${id}`;
 
 	fetch(apiUrl)
 		.then((response) => response.json())
@@ -25,8 +25,7 @@ function fetchProductDetails(id) {
 let media = []; // This will store the media data
 
 function fetchMedia() {
-	const mediaApiUrl =
-		'http://localhost/wordpress/wp-json/wp/v2/media?consumer_key=YOUR_KEY&consumer_secret=YOUR_SECRET';
+	const mediaApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/media';
 	return fetch(mediaApiUrl).then((response) => response.json());
 }
 
