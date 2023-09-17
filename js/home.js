@@ -9,18 +9,18 @@ async function fetchProductsAndMedia() {
 	let products = await productsResponse.json();
 	let media = await mediaResponse.json();
 
-	// Display the latest product in 'feature-product' section
+	// Display the latest product/feature product
 	if (products && products.length > 0) {
 		displayProduct(products[0], 'feature-product', media);
 	}
 
-	// Display the next 3 products in 'idkproducts-latest' section
+	// Display the next 3 products
 	let latestProducts = products.slice(1, 4);
 	displayProducts(latestProducts, 'idkproducts-latest', media);
 }
 
 function truncateContent(content, limit = 60) {
-	const strippedContent = content.replace(/<[^>]+>/g, ''); // Remove HTML tags
+	const strippedContent = content.replace(/<[^>]+>/g, '');
 	return strippedContent.length > limit
 		? strippedContent.substr(0, limit) + '...'
 		: strippedContent;
@@ -38,7 +38,6 @@ function displayProduct(product, sectionId, media) {
 	let productDiv = document.createElement('div');
 	productDiv.className = 'product';
 
-	// Create the clickable headline (h3) first
 	let productTitle = document.createElement('h3');
 
 	let productTitleLink = document.createElement('a');
@@ -89,7 +88,6 @@ function displayProduct(product, sectionId, media) {
 function displayProducts(products, sectionId, media) {
 	products.forEach((product) => displayProduct(product, sectionId, media));
 }
-
 
 
 // Call the main function
