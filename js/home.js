@@ -1,3 +1,8 @@
+/** @format */
+
+document.addEventListener('DOMContentLoaded', () => {
+	fetchProductsAndMedia();
+});
 
 const productApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/product';
 const mediaApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/media';
@@ -25,7 +30,6 @@ function truncateContent(content, limit = 60) {
 		? strippedContent.substr(0, limit) + '...'
 		: strippedContent;
 }
-
 
 function getImageFromMedia(product, media) {
 	let mediaItem = media.find((item) => item.id === product.featured_media);
@@ -56,7 +60,6 @@ function displayProduct(product, sectionId, media) {
 		productImage.src = imageUrl;
 	}
 
-	
 	productLink.appendChild(productImage);
 	productDiv.appendChild(productLink);
 
@@ -83,12 +86,6 @@ function displayProduct(product, sectionId, media) {
 	section.appendChild(productDiv);
 }
 
-
-
 function displayProducts(products, sectionId, media) {
 	products.forEach((product) => displayProduct(product, sectionId, media));
 }
-
-
-// Call the main function
-fetchProductsAndMedia();

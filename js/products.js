@@ -32,14 +32,16 @@ function displayProducts(products, media) {
 		productDiv.className = 'product';
 
 		let productTitle = document.createElement('h3');
-		productTitle.textContent = product.title.rendered;
-		
 
-		let productContent = document.createElement('p');
-		productContent.innerHTML = truncateContent(product.content.rendered, 60);
+		let productTitleLink = document.createElement('a');
+		productTitleLink.href = `productDetail.html?id=${product.id}`;
+		productTitleLink.textContent = product.title.rendered;
 
-		let productPrice = document.createElement('p');
-		productPrice.textContent = `$29.99`;
+		productTitle.appendChild(productTitleLink);
+		productDiv.appendChild(productTitle);
+
+		let productLink = document.createElement('a');
+		productLink.href = `productDetail.html?id=${product.id}`;
 
 		let productImage = document.createElement('img');
 		let associatedMedia = media.find((m) => m.id === product.featured_media);
@@ -47,30 +49,35 @@ function displayProducts(products, media) {
 			productImage.src = associatedMedia.source_url;
 		}
 
-		let productLink = document.createElement('a');
-		productLink.href = `productDetail.html?id=${product.id}`;
-		productLink.textContent = 'View Details';
-		productLink.addClassName = 'viewDetails';
-		
-		
-		
+		productLink.appendChild(productImage);
+		productDiv.appendChild(productLink);
+
+		let productContent = document.createElement('p');
+		productContent.innerHTML = truncateContent(product.content.rendered, 60);
+
+		let productPrice = document.createElement('p');
+		productPrice.textContent = `$29.99`; //Does not fetch price from the URL, don't know why. 
+
+		let viewDetailsLink = document.createElement('a');
+		viewDetailsLink.href = `productDetail.html?id=${product.id}`;
+		viewDetailsLink.textContent = 'View Details';
+		viewDetailsLink.className = 'viewDetails';
+
 		function addToCart(productId) {
 			console.log(`Product with ID: ${productId} added to cart.`);
 		}
 		let addToCartButton = document.createElement('button');
-		addToCartButton.innerText = "add to cart";
+		addToCartButton.innerText = 'add to cart';
 		addToCartButton.className = 'addToCart';
 		addToCartButton.addEventListener('click', () => {
 			addToCartButton(product.id);
 		});
-		
-		productDiv.appendChild(productTitle);
-		productDiv.appendChild(productImage);
+
 		productDiv.appendChild(productContent);
-		productDiv.appendChild(productLink);
+		productDiv.appendChild(viewDetailsLink);
 		productDiv.appendChild(productPrice);
 		productDiv.appendChild(addToCartButton);
 		productsSection.appendChild(productDiv);
 	});
-	
 }
+
