@@ -138,7 +138,10 @@ main {
 	padding: 10px;
 	border-radius: 10px;
 	width: 35rem;
-	height: 35rem;
+	height: 40rem;
+}
+#product-detail p {
+	width: 32rem;
 }
 #product-detail img {
 	height: 18rem;
