@@ -119,7 +119,7 @@ button {
 	padding: 1rem;
 	border-radius: 10px;
 	width: 30rem;
-	height: 38rem;
+	min-height: 38rem;
 }
 #product-detail img {
 	height: 18rem;
@@ -167,7 +167,6 @@ footer {
 	text-align: center;
 }
 footer .social-icons {
-	position: absolute;
 	right: 3rem;
 	bottom: 1rem;
 }
