@@ -69,14 +69,8 @@ button {
 	transform: scale(1.2);
 	transition: 0.3s;
 }
-main {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 2rem 3rem;
-}
-#feature-products {
+
+#products-container, #featured-products-container {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 3rem;
@@ -84,22 +78,7 @@ main {
 	gap: 2rem;
 	flex-wrap: wrap;
 }
-#idkproducts-latest {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 3rem;
-	align-items: center;
-	gap: 2rem;
-	flex-wrap: wrap;
-}
-#productsidk {
-	display: flex;
-	justify-content: center;
-	margin-top: 3rem;
-	align-items: center;
-	gap: 2rem;
-	flex-wrap: wrap;
-}
+
 .product {
 	display: flex;
 	justify-content: space-between;

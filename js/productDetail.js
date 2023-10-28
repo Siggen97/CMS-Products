@@ -1,68 +1,70 @@
-/** @format */
-
-document.addEventListener('DOMContentLoaded', () => {
-	const params = new URLSearchParams(window.location.search);
-	const productId = params.get('id');
-
-	fetchMedia().then((fetchedMedia) => {
-		media = fetchedMedia; // Store the media data in the media variable
-		if (productId) {
-			fetchProductDetails(productId);
-		}
-	});
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    if (productId) {
+        fetchProduct(productId);
+    } else {
+        document.getElementById('product-detail').innerHTML = '<p>Product not found</p>';
+    }
 });
 
+const productsApiUrl = "https://www.idkweb.site/wp-json/wc/v3/products";
+const username = "ck_3d16c949afed57021de723f818515b17c3881454";
+const password = "cs_ad53cee6bd8b9b19130fcea30b16e1dc941cd80e";
+const headers = new Headers({
+    'Authorization': 'Basic ' + btoa(username + ':' + password)
+});
 
-function fetchProductDetails(id) {
-	const apiUrl = `https://www.idkweb.site/wp-json/wp/v2/product/${id}`;
-
-	fetch(apiUrl)
-		.then((response) => response.json())
-		.then((product) => {
-			displayProductDetail(product);
-		});
+async function fetchProduct(productId) {
+    try {
+        let response = await fetch(`${productsApiUrl}/${productId}`, { headers: headers });
+        if (response.ok) {
+            let product = await response.json();
+            displayProductDetail(product);
+        } else {
+            document.getElementById('product-detail').innerHTML = '<p>Product not found</p>';
+        }
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        document.getElementById('product-detail').innerHTML = '<p>Something went wrong</p>';
+    }
 }
-let media = []; // This will store the media data
-
-function fetchMedia() {
-	const mediaApiUrl = 'https://www.idkweb.site/wp-json/wp/v2/media';
-	return fetch(mediaApiUrl).then((response) => response.json());
-}
-
 
 function displayProductDetail(product) {
-	const section = document.getElementById('product-detail');
-	section.innerHTML = ''; 
+    const container = document.getElementById('product-detail');
 
-	let productTitle = document.createElement('h2');
-	productTitle.textContent = product.title.rendered;
+    let productDiv = document.createElement("div");
+    productDiv.className = "product-detail";
 
-	let productDescription = document.createElement('p');
-	productDescription.innerHTML = product.content.rendered;
+    let productImage = document.createElement("img");
+    if (product.images.length > 0) {
+        productImage.src = product.images[0].src;
+    }
+    productDiv.appendChild(productImage);
 
-    let productPrice = document.createElement('p');
-		productPrice.textContent = `$29.99`;
+    let productInfo = document.createElement("div");
+    productInfo.className = "product-info";
 
-		let productImage = document.createElement('img');
-		let associatedMedia = media.find((m) => m.id === product.featured_media);
-		if (associatedMedia && associatedMedia.source_url) {
-			productImage.src = associatedMedia.source_url;
-		}
+    let productName = document.createElement("h1");
+    productName.textContent = product.name;
+    productInfo.appendChild(productName);
 
-		function addToCart(productId) {
-			console.log(`Product with ID: ${productId} added to cart.`);
-		}
-		let addToCartButton = document.createElement('button');
-		addToCartButton.innerText = 'add to cart';
-		addToCartButton.className = 'addToCart';
-		addToCartButton.addEventListener('click', () => {
-			addToCart(product.id);
-		});
+    let productPrice = document.createElement("p");
+    productPrice.textContent = `$${product.price}`;
+    productInfo.appendChild(productPrice);
 
+    let productDescription = document.createElement("p");
+    productDescription.innerHTML = product.description;
+    productInfo.appendChild(productDescription);
 
-	section.appendChild(productTitle);
-    section.appendChild(productImage)
-	section.appendChild(productDescription);
-    section.appendChild(productPrice)
-    section.appendChild(addToCartButton);
+    let addToCartButton = document.createElement("button");
+    addToCartButton.innerText = "Add to Cart";
+    addToCartButton.className = "addToCart";
+    addToCartButton.addEventListener("click", () => {
+        
+    });
+    productInfo.appendChild(addToCartButton);
+
+    productDiv.appendChild(productInfo);
+    container.appendChild(productDiv);
 }
