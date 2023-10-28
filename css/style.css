@@ -97,7 +97,7 @@ button {
 .product img {
 	width: 15rem;
 }
-.addToCart {
+.addToCart, .submit-request {
 	color: black;
 	background-color: #edf2f4;
 	border: 2px solid #2b2d428f;
@@ -105,8 +105,8 @@ button {
 	border-radius: 5px;
 	width: 6rem;
 }
-.addToCart:hover {
-	border: 3px solid black;
+.addToCart, .submit-request:hover {
+	border: 2.5px solid black;
 }
 .product-single-page {
 	display: flex;
@@ -123,6 +123,38 @@ button {
 }
 #product-detail img {
 	height: 18rem;
+}
+.about-contact {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 3em;
+}
+.about-contact p {
+	width: fit-content;
+}
+.about-content {
+	color: black;
+    background-color: white;
+    padding: 10px 16px;
+    border-radius: 3px;
+    width: 45%; 
+	margin: auto;
+	max-width: 30rem;
+}
+.contact-content {
+	margin: auto;
+	background-color: white;
+	padding: 10px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	max-width: 30rem;
+}
+.contact-content div {
+	padding: 5px;
+	
 }
 footer {
 	display: flex;
