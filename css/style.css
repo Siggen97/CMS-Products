@@ -11,18 +11,17 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: linear-gradient(to top, #edafb8, #f7e1d7);
-	background: #fff2ec;
+	background: linear-gradient(to left, #edf2f4, #8d99ae);
 	width: 100vw;
     caret-color: transparent;
-	border-top: #d3b3b8 8px solid;
+	border-top: #2b2d428f 8px solid;
 	backdrop-filter: blur(80px);
 }
 body::-webkit-scrollbar {
 	display: none;
 }
 header {
-	border-bottom: 5px solid #d3b3b8;
+	border-bottom: 5px solid #2b2d428f;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);
 }
 .header-top {
@@ -85,7 +84,7 @@ button {
 	justify-content: space-between;
 	flex-direction: column;
 	background-color: white;
-	border: 1px solid #d3b3b8;
+	border: 1px solid #2b2d428f;
 	border-radius: 10px;
 	padding: 10px;
 	width: 20rem;
@@ -100,8 +99,8 @@ button {
 }
 .addToCart {
 	color: black;
-	background-color: #fff2ec;
-	border: 2px solid #d3b3b8;
+	background-color: #edf2f4;
+	border: 2px solid #2b2d428f;
 	padding: 8px;
 	border-radius: 5px;
 	width: 6rem;
@@ -111,7 +110,7 @@ button {
 }
 #product-detail {
 	background-color: white;
-	border: 1px solid #d3b3b8;
+	border: 1px solid #2b2d428f;
 	padding: 10px;
 	border-radius: 10px;
 	width: 35rem;
@@ -128,7 +127,7 @@ footer {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-    background-color: #d3b3b8;
+    background-color: #2b2d428f;
 	width: 100%;
 	backdrop-filter: blur(80px);
 	text-align: center;
