@@ -105,7 +105,10 @@ button {
 	border-radius: 5px;
 	width: 6rem;
 }
-.addToCart, .submit-request:hover {
+.addToCart:hover {
+	border: 2.5px solid black;
+}
+.submit-request:hover {
 	border: 2.5px solid black;
 }
 .product-single-page {
