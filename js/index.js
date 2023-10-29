@@ -80,3 +80,51 @@ function displayProduct(product, container) {
     container.appendChild(productDiv);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchProducts();
+    document.getElementById('searchInput').addEventListener('input', searchProducts);
+    document.getElementById('sortSelect').addEventListener('change', sortProducts);
+});
+
+let allProducts = [];
+
+async function fetchProducts() {
+    try {
+        let response = await fetch(productsApiUrl, { headers: headers });
+        let products = await response.json();
+        allProducts = products;
+        displayProducts(products, 'products-container');
+        displayFeaturedProducts(products, 'featured-products-container');
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+}
+
+function searchProducts() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const filteredProducts = allProducts.filter(product => 
+        product.name.toLowerCase().includes(searchInput) || 
+        product.description.toLowerCase().includes(searchInput)
+    );
+    displayProducts(filteredProducts, 'products-container');
+}
+
+function sortProducts() {
+    const sortValue = document.getElementById('sortSelect').value;
+    let sortedProducts = [...allProducts];
+    if (sortValue === 'low-high') {
+        sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortValue === 'high-low') {
+        sortedProducts.sort((a, b) => b.price - a.price);
+    } else if (sortValue === 'newest') {
+        sortedProducts.sort((a, b) => new Date(b.date_created) - new Date(a.date_created));
+    } else if (sortValue === 'popular') {
+    }
+    displayProducts(sortedProducts, 'products-container');
+}
+
+function displayProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear existing products
+    products.forEach((product) => displayProduct(product, container));
+}

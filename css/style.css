@@ -70,6 +70,16 @@ button {
 .products-section {
 	margin: 1rem;
 }
+.search-sort-container {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin: 1rem;
+}
+#searchInput, #sortSelect {
+	border-radius: 5px;
+	padding: 3px;
+}
 #products-container, #featured-products-container {
 	display: flex;
 	justify-content: center;
