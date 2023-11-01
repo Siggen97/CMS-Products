@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
+    document.getElementById('searchInput').addEventListener('input', searchProducts);
+    document.getElementById('sortSelect').addEventListener('change', sortProducts);
 });
 
 const productsApiUrl = "https://www.idkweb.site/wp-json/wc/v3/products";
@@ -9,11 +11,13 @@ const headers = new Headers({
     'Authorization': 'Basic ' + btoa(username + ':' + password)
 });
 
+let allProducts = [];
+
 async function fetchProducts() {
     try {
-        let response = await fetch(productsApiUrl, {headers: headers});
+        let response = await fetch(productsApiUrl, { headers: headers });
         let products = await response.json();
-
+        allProducts = products;
         displayProducts(products, 'products-container');
         displayFeaturedProducts(products, 'featured-products-container');
     } catch (error) {
@@ -23,12 +27,14 @@ async function fetchProducts() {
 
 function displayProducts(products, containerId) {
     const container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear existing products
     products.forEach((product) => displayProduct(product, container));
 }
 
 function displayFeaturedProducts(products, containerId) {
     const container = document.getElementById(containerId);
     const featuredProducts = products.filter(product => product.featured);
+    container.innerHTML = '';
     featuredProducts.forEach((product) => displayProduct(product, container));
 }
 
@@ -80,31 +86,11 @@ function displayProduct(product, container) {
     container.appendChild(productDiv);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchProducts();
-    document.getElementById('searchInput').addEventListener('input', searchProducts);
-    document.getElementById('sortSelect').addEventListener('change', sortProducts);
-});
-
-let allProducts = [];
-
-async function fetchProducts() {
-    try {
-        let response = await fetch(productsApiUrl, { headers: headers });
-        let products = await response.json();
-        allProducts = products;
-        displayProducts(products, 'products-container');
-        displayFeaturedProducts(products, 'featured-products-container');
-    } catch (error) {
-        console.error("Error fetching products:", error);
-    }
-}
-
 function searchProducts() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
     const filteredProducts = allProducts.filter(product => 
         product.name.toLowerCase().includes(searchInput) || 
-        product.description.toLowerCase().includes(searchInput)
+        (product.description && product.description.toLowerCase().includes(searchInput))
     );
     displayProducts(filteredProducts, 'products-container');
 }
@@ -125,6 +111,6 @@ function sortProducts() {
 
 function displayProducts(products, containerId) {
     const container = document.getElementById(containerId);
-    container.innerHTML = ''; // Clear existing products
+    container.innerHTML = ''; 
     products.forEach((product) => displayProduct(product, container));
 }
